@@ -1,12 +1,50 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>주식 과 검색어</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <title>첫 Flask 프로젝트</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+        <style>
+            .center {
+                text-align: center;
+            }
+        </style>
+        <script>
+            $(document).ready(function () {
+                // index.html 로드가 완료되면 자동으로 showStar() 함수를 호출합니다.
+                dateTime();
+            });
+
+            function dateTime() {
+                // 1. # box의 내부 html 태그를 모두 삭제합니다.
+                $('#box').empty()
+
+                // 2. 서버에 1) GET 방식으로, 2) /keyword 라는 주소로 stock을 요청합니다.
+                $.ajax({
+                    type: "GET",
+                    url: "/keyword",
+                    data: {'datetime':'202008242200'},
+                    success: function (response) {
+                        // 3. 서버가 돌려준 stock를 stocks라는 변수에 저장합니다.
+                        let stocks = response['stock']
+                        // 4. for 문을 활용하여 star 배열의 요소를 차례대로 조회합니다.
+                        for (let i = 0; i < stocks.length; i++) {
+                            let stock = stocks[i]
+                            // 5. star[i] 요소의 name, url, img_url, recent, like 키 값을 활용하여 값을 조회합니다.
+                            let name = stock['stock_name']
+                            let increase = stock['increase']
+        </script>
     </head>
     <body>
-        <h1>서버를 만들었다!</h1>
+        <section class="hero is-warning">
+            <div class="hero-body">
+                <div class="container center">
+                    <h1 class="title">
+                        증권 키워드
+                    </h1>
+                </div>
     </body>
 </html>
